@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Scott Z's Library</title>
+    <script type="text/javascript"></script>
+
+    
+</head>
+<body onload="load()">
+    <div id="myform">
+        <b>Please enter Book details below:</b>
+        <table>
+            <form id="myForm">
+            <tr>
+                <td>Title:</td>
+                <td><input type="text" id="title"></td>
+            </tr>
+            <tr>
+                <td>Author:</td>
+                <td><input type="text" id="author"></td>
+            </tr>
+            <tr>
+                <td>Year Pub:</td>
+                <td><input type="text" id="year"></td>
+            </tr>
+            <tr>
+                <td>Pages:</td>
+                <td><input type="text" id="pages"></td>
+            </tr>
+           
+            <tr>
+                <br>
+     
+                <td><input type="button" id="add" value="Add New Book" onclick="Javascript:addRow()"></td>
+                <td>&nbsp;</td>
+                <td><input type="button" onclick="resetFxn()" value="Reset Form">
+        
+                </form>
+             </table>
+        <br />
+        <br />
+        <script>
+            function resetFxn() {
+                document.getElementById("myForm").reset();
+            }
+
+        </script>
+    </div>
+    <div id="mydata">
+        
+        <table id="myTableData" border="1" cellpadding="10">
+            <tr colspan="6">My Library</tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><b>Title</b></td>
+                <td><b>Author</b></td>
+                <td><b>Year Pub</b></td>
+                <td><b>Pages</b></td>
+            </tr>
+        </table>
+        &nbsp;<br />
+    </div>
+
+    <script>
+
+        function addRow() {
+            var myTitle = document.getElementById("title");
+            var myAuthor = document.getElementById("author");
+            var myYear = document.getElementById("year");
+            var myPages = document.getElementById("pages");
+            var table = document.getElementById("myTableData");
+
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+
+
+
+            row.insertCell(0).innerHTML = '<input type="button" value="Delete" onClick="Javascript:deleteRow(this)">';
+            row.insertCell(1).innerHTML = myTitle.value;
+            row.insertCell(2).innerHTML = myAuthor.value;
+            row.insertCell(3).innerHTML = myYear.value;
+            row.insertCell(4).innerHTML = myPages.value;
+
+        }
+
+    function deleteRow(obj) {
+
+    var index = obj.parentNode.parentNode.rowIndex;
+    var table = document.getElementById("myTableData");
+    table.deleteRow(index);
+
+    }
+    </script>
+    
+    <p><input type="button" value="Sort by Author" onclick="sortAuthor()"</p> 
+    &nbsp;<br />
+
+    <script>
+        function sortAuthor() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("myTableData");
+            switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+        while (switching) {
+    //start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers) - I have two rows above the data one with My Library and then the column headings:*/
+        for (i = 2; i < (rows.length - 2); i++) {
+      //start by saying there should be no switching:
+            shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next: the index value was initially set to [0] because that table had the sortable data in the first column or index [0].  My author data is in third column or index [2]*/
+            x = rows[i].getElementsByTagName("TD")[2];
+            y = rows[i + 1].getElementsByTagName("TD")[2];
+      //check if the two rows should switch place:
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+    </script>
+<!-- and now sort by title-->
+    
+    <p><input type="button" value="Sort by Title" onclick="sortTitle()"</p>
+
+    <script>
+        function sortTitle() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("myTableData");
+            switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+        while (switching) {
+    //start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers) - I have two rows above the data one with My Library and then the column headings:*/
+        for (i = 2; i < (rows.length - 2); i++) {
+      //start by saying there should be no switching:
+            shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next: the index value was initially set to [0] because that table had the sortable data in the first column or index [0].  My title data is in second column or index [1]*/
+            x = rows[i].getElementsByTagName("TD")[1];
+            y = rows[i + 1].getElementsByTagName("TD")[1];
+      //check if the two rows should switch place:
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+    </script>
+
+
+
+
+
+</body>
+</html>
+
+<!--Source for the JavaScript file - app.js
